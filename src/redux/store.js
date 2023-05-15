@@ -1,8 +1,10 @@
 import {configureStore} from '@reduxjs/toolkit';
-import counter from './slices/counterSlice'
+import nav from './slices/navSlice';
+import auth from './slices/authSlice';
 
 export const store = configureStore({
     reducer: {
-        counter
+        nav,
+        auth,
     }
 })

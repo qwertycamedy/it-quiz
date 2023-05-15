@@ -9,13 +9,16 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import MySection from "../components/_UI/MySection";
+import H1 from "../components/_UI/H1";
 
 function Test() {
   const navigate = useNavigate();
   return (
     <MyPage>
-      <div className="inner my-16">
-        <div className="flex flex-col gap-8 rounded-xl shadow-md bg-white p-8">
+      <div className="inner mt-32 mb-8">
+          <H1 classNames={'mb-[35px]'}>Название теста</H1>
+        <MySection>
           <FormControl>
             <FormLabel id="demo-radio-buttons-group-label" className="mb-4">
               Текст вопроса удивительно поставленного с хорошей интонацией?
@@ -61,7 +64,7 @@ function Test() {
               Next
             </Button>
           </div>
-        </div>
+        </MySection>
       </div>
     </MyPage>
   );
