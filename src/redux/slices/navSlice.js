@@ -11,6 +11,11 @@ const initialState = [
         to: 'tests',
         body: 'Тесты',
     },
+    {
+        id: '2',
+        to: 'kata',
+        body: 'Задача',
+    },
 ]
 
 export const navSlice = createSlice({

@@ -9,6 +9,7 @@ import CreateTest from "./pages/CreateTest";
 import Profile from "./pages/Profile";
 import Auth from "./components/AuthModal";
 import AuthModal from "./components/AuthModal";
+import Kata from "./pages/Kata";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Profile />} />
           <Route path="createTest" element={<CreateTest />} />
+          <Route path="kata" element={<Kata />} />
         </Routes>
 
         <AuthModal />

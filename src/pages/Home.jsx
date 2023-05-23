@@ -27,6 +27,9 @@ function Home() {
             <Link to="createTest">
               <Button variant="contained">Создать тест</Button>
             </Link>
+            <Link to="kata">
+              <Button variant="outlined">Задача</Button>
+            </Link>
           </div>
         ) : (
           <SignInOpenBtn />

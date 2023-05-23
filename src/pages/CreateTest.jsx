@@ -9,14 +9,13 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MyPage from "../components/_UI/MyPage";
-import MySection from "../components/_UI/MySection";
 import { GrClose } from "react-icons/gr";
 import H1 from "../components/_UI/H1";
 import NewQuestion from "../components/NewQuestion";
 
 function CreateTest() {
   const [name, setName] = useState("");
-  const [savedName, setSavedName] = useState('');
+  const [savedName, setSavedName] = useState("");
   const [lang, setLang] = useState("");
 
   const handleName = event => {
@@ -25,12 +24,12 @@ function CreateTest() {
 
   const saveName = () => {
     setSavedName(name);
-  }
+  };
 
   const clearName = () => {
-    setName('');
-    setSavedName('');
-  }
+    setName("");
+    setSavedName("");
+  };
 
   const handleLang = event => {
     setLang(event.target.value);
@@ -49,7 +48,9 @@ function CreateTest() {
               onChange={handleName}
               className="w-full"
             />
-            <Button variant="contained" onClick={saveName}>Сохранить</Button>
+            <Button variant="contained" onClick={saveName}>
+              Сохранить
+            </Button>
           </>
         ) : (
           <>
