@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import Auth from "./components/AuthModal";
 import AuthModal from "./components/AuthModal";
 import Kata from "./pages/Kata";
+import Katas from "./pages/Katas";
 
 
 function App() {
@@ -19,13 +20,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="auth" element={<Auth />} />
-          <Route path="tests" element={<Tests />} />
-          <Route path="test/:id" element={<Test />} />
-          <Route path="results" element={<Results />} />
           <Route path="profile" element={<Profile />} />
           <Route path="settings" element={<Profile />} />
-          <Route path="createTest" element={<CreateTest />} />
-          <Route path="kata" element={<Kata />} />
+          <Route path="tasks" element={<Katas />} />
+          <Route path="task" element={<Kata />} />
         </Routes>
 
         <AuthModal />

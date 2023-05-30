@@ -16,7 +16,7 @@ function Header() {
   const isProfile = ({ isActive }) =>
     isActive
       ? "border-2 border-blue-400 rounded-full flex items-center justify-center"
-      : "flex items-center justify-center rounded-full p-[2px]";
+      : "flex items-center justify-center rounded-full p-[2px]"; 
 
   return (
     <header className="fixed z-50 left-0 top-0 w-full bg-white shadow-md">

@@ -21,14 +21,8 @@ function Home() {
         </H1>
         {isAuth ? (
           <div className="flex gap-4">
-            <Link to={nav[1].to}>
-              <Button variant="outlined">{nav[1].body}</Button>
-            </Link>
-            <Link to="createTest">
-              <Button variant="contained">Создать тест</Button>
-            </Link>
             <Link to="kata">
-              <Button variant="outlined">Задача</Button>
+              <Button variant="outlined">Задачи</Button>
             </Link>
           </div>
         ) : (

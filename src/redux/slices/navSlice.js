@@ -8,12 +8,12 @@ const initialState = [
     },
     {
         id: '1',
-        to: 'tests',
-        body: 'Тесты',
+        to: 'tasks',
+        body: 'Задачи',
     },
     {
         id: '2',
-        to: 'kata',
+        to: 'task',
         body: 'Задача',
     },
 ]

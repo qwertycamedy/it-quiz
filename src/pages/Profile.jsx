@@ -51,13 +51,13 @@ function Profile() {
                   variant={tabs ? "contained" : "outlined"}
                   onClick={() => setTabs(true)}
                 >
-                  Ваши тесты
+                  Все задачи
                 </Button>
                 <Button
                   variant={tabs ? "outlined" : "contained"}
                   onClick={() => setTabs(false)}
                 >
-                  Пройденные тесты
+                  Пройденные задачи
                 </Button>
               </ButtonGroup>
               <Link to="/createTest">
