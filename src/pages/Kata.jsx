@@ -5,14 +5,15 @@ import { Button, TextField } from "@mui/material";
 import { BsDownload } from "react-icons/bs";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setKatas } from "../redux/slices/katasSlice";
 
 const Kata = ({ filteredUsers }) => {
+  const dispatch = useDispatch();
   const [kata, setKata] = useState({});
   const [value, setValue] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-  const { users } = useSelector(state => state.users);
-  const { nickname, password } = useSelector(state => state.auth);
+  const { katas } = useSelector(state => state.katas);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -33,14 +34,14 @@ const Kata = ({ filteredUsers }) => {
       `https://6466360f9c09d77a62006f18.mockapi.io/users/${filteredUsers.id}`
     );
 
-    const newKatas = filteredUsers.katas.filter(obj => obj.id !== id && obj);
+    const newKatas = katas.map(obj =>
+      obj.id !== id ? obj : { ...kata, isCompleted: true, isSuccess: true }
+    );
     await axios.post(`https://6466360f9c09d77a62006f18.mockapi.io/users/`, {
       ...filteredUsers,
-      katas: [...newKatas, { ...kata, isCompleted: true, isSuccess: true }],
+      katas: newKatas,
     });
-    filteredUsers.katas.map(obj =>
-      obj.id === id ? { ...obj, isCompleted: true, isSuccess: true } : obj
-    );
+    dispatch(setKatas(newKatas));
 
     navigate("/profile");
   };
@@ -50,15 +51,15 @@ const Kata = ({ filteredUsers }) => {
       `https://6466360f9c09d77a62006f18.mockapi.io/users/${filteredUsers.id}`
     );
 
-    const newKatas = filteredUsers.katas.filter(obj => obj.id !== id && obj);
+    const newKatas = katas.map(obj =>
+      obj.id !== id ? obj : { ...kata, isCompleted: true, isSuccess: false }
+    );
     await axios.post(`https://6466360f9c09d77a62006f18.mockapi.io/users/`, {
       ...filteredUsers,
-      katas: [...newKatas, { ...kata, isCompleted: true, isSuccess: false }],
+      katas: newKatas,
     });
-    filteredUsers.katas.map(obj =>
-      obj.id === id ? { ...obj, isCompleted: true, isSuccess: false } : obj
-    );
-    
+    dispatch(setKatas(newKatas));
+
     navigate("/profile");
   };
 
@@ -68,7 +69,7 @@ const Kata = ({ filteredUsers }) => {
 
   useEffect(() => {
     const trueKata = () => {
-      const pageKata = filteredUsers.katas.find(obj =>
+      const pageKata = katas.find(obj =>
         `/task/${obj.id}` === location.pathname ? obj : null
       );
 

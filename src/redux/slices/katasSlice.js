@@ -14,6 +14,6 @@ const katasSlice = createSlice({
     }
 })
 
-export const {setKatas,} = katasSlice.actions;
+export const {setKatas} = katasSlice.actions;
 
 export default katasSlice.reducer;

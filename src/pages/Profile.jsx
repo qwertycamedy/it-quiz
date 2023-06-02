@@ -9,8 +9,9 @@ import { useSelector } from "react-redux";
 import KataBlock from "../components/KataBlock";
 import CompletedKataBlock from "../components/CompletedKataBlock";
 
-function Profile({ filteredUsers }) {
+function Profile() {
   const { nickname } = useSelector(state => state.auth);
+  const { katas } = useSelector(state => state.katas);
   const [tabs, setTabs] = useState(true);
 
   const location = useLocation();
@@ -64,14 +65,14 @@ function Profile({ filteredUsers }) {
             </div>
             {tabs ? (
               <div className="flex flex-col gap-8">
-                {filteredUsers.katas.map(
+                {katas.map(
                   kata =>
                     !kata.isCompleted && <KataBlock kata={kata} key={kata.id} />
                 )}
               </div>
             ) : (
               <div className="flex flex-col gap-8">
-                {filteredUsers.katas.map(
+                {katas.map(
                   kata =>
                     kata.isCompleted && (
                       <CompletedKataBlock kata={kata} key={kata.id} />

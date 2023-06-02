@@ -4,15 +4,16 @@ import { Button, TextField } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import {
   closeModal,
-  signIn,
   setNickname,
   setPassword,
+  signIn,
 } from "../redux/slices/authSlice";
 import axios from "axios";
 
 const AuthModal = ({ users }) => {
   const dispatch = useDispatch();
   const { nickname, password } = useSelector(state => state.auth);
+
 
   const handleNickname = e => {
     dispatch(setNickname(e.target.value));
@@ -23,7 +24,7 @@ const AuthModal = ({ users }) => {
 
   const onSignIn = () => {
     if (nickname.length >= 3 && password.length >= 3) {
-      if (users.find(user => user.nickname.includes(nickname))) {
+      if (users.find(user => user.nickname.includes(nickname)) && users.find(user => user.password.includes(password))) {
         dispatch(signIn(true));
         dispatch(closeModal(false));
       } else {
