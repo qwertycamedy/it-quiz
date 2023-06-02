@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import MyPage from "../components/_UI/MyPage";
 import MySection from "../components/_UI/MySection";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import H1 from "../components/_UI/H1";
-import TestsBlock from "../components/TestsBlock";
 import { Button, ButtonGroup } from "@mui/material";
 import Settings from "../components/Settings";
-import CompletedTestsBlock from "../components/CompletedTestBlock";
+import { useSelector } from "react-redux";
+import KataBlock from "../components/KataBlock";
+import CompletedKataBlock from "../components/CompletedKataBlock";
 
-function Profile() {
-  const [tabs, setTabs] = useState(false);
+function Profile({ filteredUsers }) {
+  const { nickname } = useSelector(state => state.auth);
+  const [tabs, setTabs] = useState(true);
 
   const location = useLocation();
 
@@ -20,7 +22,7 @@ function Profile() {
 
   return (
     <MyPage>
-      <div className="flex gap-8 relative mt-24">
+      <div className="flex gap-8 relative py-24">
         <MySection classNames={"sticky top-24 h-max"}>
           <NavLink to="/profile" className={isActive}>
             Профиль
@@ -40,8 +42,7 @@ function Profile() {
                   alt="user"
                 />
                 <div className="flex flex-col gap-2 pb-2">
-                  <H1>Никнейм Профиля</H1>
-                  <p>Статус статусного человека</p>
+                  <H1>{nickname}</H1>
                 </div>
               </div>
             </MySection>
@@ -60,20 +61,22 @@ function Profile() {
                   Пройденные задачи
                 </Button>
               </ButtonGroup>
-              <Link to="/createTest">
-                <Button variant="contained">Создать тест</Button>
-              </Link>
             </div>
             {tabs ? (
               <div className="flex flex-col gap-8">
-                <TestsBlock />
-                <TestsBlock />
-                <TestsBlock />
-                <TestsBlock />
+                {filteredUsers.katas.map(
+                  kata =>
+                    !kata.isCompleted && <KataBlock kata={kata} key={kata.id} />
+                )}
               </div>
             ) : (
               <div className="flex flex-col gap-8">
-                <CompletedTestsBlock />
+                {filteredUsers.katas.map(
+                  kata =>
+                    kata.isCompleted && (
+                      <CompletedKataBlock kata={kata} key={kata.id} />
+                    )
+                )}
               </div>
             )}
           </div>

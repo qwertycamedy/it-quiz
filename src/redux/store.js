@@ -1,10 +1,12 @@
 import {configureStore} from '@reduxjs/toolkit';
-import nav from './slices/navSlice';
 import auth from './slices/authSlice';
+import katas from './slices/katasSlice';
+import users from './slices/usersSlice';
 
 export const store = configureStore({
     reducer: {
-        nav,
         auth,
+        katas,
+        users,
     }
 })

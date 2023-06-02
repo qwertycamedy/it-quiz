@@ -7,7 +7,6 @@ import SignInOpenBtn from "./SignInOpenBtn";
 
 function Header() {
   const { isAuth } = useSelector(state => state.auth);
-  const nav = useSelector(state => state.nav);
 
   const isActive = ({ isActive }) =>
     isActive
@@ -27,13 +26,11 @@ function Header() {
             {isAuth ? (
               <>
                 <ul className="flex items-center gap-4">
-                  {nav.map(item => (
-                    <li key={item.id}>
-                      <NavLink to={item.to} className={isActive}>
-                        {item.body}
+                    <li>
+                      <NavLink to={'/tasks'} className={isActive}>
+                        Задачи
                       </NavLink>
                     </li>
-                  ))}
                 </ul>
                 <NavLink to={"profile"} className={isProfile}>
                   <img

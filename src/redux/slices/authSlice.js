@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isAuth: true,
+  isAuth: false,
   modalIsOpen: false,
-  modalInput: '',
+  nickname: "",
+  password: "",
 };
 
 const authSlice = createSlice({
@@ -17,12 +18,16 @@ const authSlice = createSlice({
       state.modalIsOpen = action.payload;
     },
 
-    setModalInput: (state,action) => {
-        state.modalInput = action.payload;
+    setNickname: (state, action) => {
+      state.nickname = action.payload;
+    },
+
+    setPassword: (state, action) => {
+      state.password = action.payload;
     },
 
     signIn: (state, action) => {
-        state.isAuth = action.payload;
+      state.isAuth = action.payload;
     },
     signOut: (state, action) => {
       state.isAuth = action.payload;
@@ -30,6 +35,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { openModal, closeModal, setModalInput, signIn, signOut } = authSlice.actions;
+export const { openModal, closeModal, setNickname, setPassword, signIn, signOut } =
+  authSlice.actions;
 
 export default authSlice.reducer;

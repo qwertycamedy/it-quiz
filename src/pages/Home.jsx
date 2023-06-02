@@ -21,7 +21,7 @@ function Home() {
         </H1>
         {isAuth ? (
           <div className="flex gap-4">
-            <Link to="kata">
+            <Link to="tasks">
               <Button variant="outlined">Задачи</Button>
             </Link>
           </div>

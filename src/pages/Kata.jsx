@@ -1,59 +1,157 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MyPage from "../components/_UI/MyPage";
 import H1 from "../components/_UI/H1";
-import MySection from "../components/_UI/MySection";
 import { Button, TextField } from "@mui/material";
 import { BsDownload } from "react-icons/bs";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useSelector } from "react-redux";
 
-const Kata = () => {
+const Kata = ({ filteredUsers }) => {
+  const [kata, setKata] = useState({});
   const [value, setValue] = useState("");
-  const [saved, setSaved] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
+  const { users } = useSelector(state => state.users);
+  const { nickname, password } = useSelector(state => state.auth);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleField = e => {
     setValue(e.target.value);
-    setSaved(value);
   };
 
   const handleSave = () => {
-    setSaved(value);
-    setValue("");
-    console.log(saved);
+    if (value.length >= 1) {
+      setValue("");
+      setIsSubmit(true);
+    }
   };
+
+  const handleSuccess = async id => {
+    await axios.delete(
+      `https://6466360f9c09d77a62006f18.mockapi.io/users/${filteredUsers.id}`
+    );
+
+    const newKatas = filteredUsers.katas.filter(obj => obj.id !== id && obj);
+    await axios.post(`https://6466360f9c09d77a62006f18.mockapi.io/users/`, {
+      ...filteredUsers,
+      katas: [...newKatas, { ...kata, isCompleted: true, isSuccess: true }],
+    });
+    filteredUsers.katas.map(obj =>
+      obj.id === id ? { ...obj, isCompleted: true, isSuccess: true } : obj
+    );
+
+    navigate("/profile");
+  };
+
+  const handleUnSuccess = async id => {
+    await axios.delete(
+      `https://6466360f9c09d77a62006f18.mockapi.io/users/${filteredUsers.id}`
+    );
+
+    const newKatas = filteredUsers.katas.filter(obj => obj.id !== id && obj);
+    await axios.post(`https://6466360f9c09d77a62006f18.mockapi.io/users/`, {
+      ...filteredUsers,
+      katas: [...newKatas, { ...kata, isCompleted: true, isSuccess: false }],
+    });
+    filteredUsers.katas.map(obj =>
+      obj.id === id ? { ...obj, isCompleted: true, isSuccess: false } : obj
+    );
+    
+    navigate("/profile");
+  };
+
+  const handleRepeat = () => {
+    setIsSubmit(false);
+  };
+
+  useEffect(() => {
+    const trueKata = () => {
+      const pageKata = filteredUsers.katas.find(obj =>
+        `/task/${obj.id}` === location.pathname ? obj : null
+      );
+
+      setKata(pageKata);
+    };
+
+    trueKata();
+  }, []);
 
   return (
     <MyPage>
-      <div className="pt-[90px]">
+      <div className="py-[90px]">
         <div className="mb-10">
           <H1 classNames={"mb-4"}>Условие задачи:</H1>
-          <p className="mb-4 font-bold">Простейшие арифметические операции</p>
-          <p className="mb-10">
-            Написать функцию arithmetic, принимающую 3 аргумента: первые 2 -
-            числа, третий - операция, которая должна быть произведена над ними.
-            Если третий аргумент +, сложить их; если —, то вычесть; * —
-            умножить; / — разделить (первое на второе). В остальных случаях
-            вернуть строку "Неизвестная операция".
-          </p>
+          <p className="mb-4 font-bold">{kata.title}</p>
+          <p className="mb-10">{kata.body}</p>
           <H1 classNames={"mb-4"}>Входные данные:</H1>
           <a
             className="flex gap-4 items-center bg-slate-400 hover:bg-slate-500 transition-colors duration-200 ease-linear text-white w-max p-4 rounded-md"
-            href="https://qwertycamedy.ru/sites/it-quiz/%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B8.docx"
+            href={kata.data}
             download
+            target="_blank"
           >
             <BsDownload />
             <span>Скачать входные данные задачи</span>
           </a>
         </div>
-        <div className="grid gap-4">
-          <H1>Ответ задачи:</H1>
+        {isSubmit ? (
+          <div className="grid gap-10">
+            <div className="grid gap-4">
+              <H1>Правильный ответ:</H1>
+              <a
+                className="flex gap-4 items-center bg-slate-400 hover:bg-slate-500 transition-colors duration-200 ease-linear text-white w-max p-4 rounded-md"
+                href={kata.answer}
+                download
+                target="_blank"
+              >
+                <BsDownload />
+                <span>Скачать ответ</span>
+              </a>
+            </div>
+            <div className="grid gap-4">
+              <H1>Сохранить как:</H1>
+              <div className="flex gap-4">
+                <Button
+                  className="w-max"
+                  variant="contained"
+                  color="success"
+                  onClick={() => handleSuccess(kata.id)}
+                >
+                  Верно
+                </Button>
+                <Button
+                  className="w-max"
+                  variant="contained"
+                  color="error"
+                  onClick={() => handleUnSuccess(kata.id)}
+                >
+                  Неверно
+                </Button>
+                <Button
+                  className="w-max"
+                  variant="contained"
+                  onClick={handleRepeat}
+                >
+                  Заново
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="grid gap-4 mb-10">
+            <H1>Ответ задачи:</H1>
             <TextField
               placeholder="Ответ решения задачи"
               value={value}
               onChange={handleField}
             />
-          <Button className="w-max" variant="contained" onClick={handleSave}>
-            Проверить
-          </Button>
-        </div>
+            <Button className="w-max" variant="contained" onClick={handleSave}>
+              Проверить
+            </Button>
+          </div>
+        )}
       </div>
     </MyPage>
   );

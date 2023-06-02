@@ -1,10 +1,10 @@
 import React from "react";
-import { IconButton, Switch } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { MdExitToApp } from "react-icons/md";
 import MySection from "./_UI/MySection";
 import H1 from "./_UI/H1";
 import { useDispatch } from "react-redux";
-import { signOut } from "../redux/slices/authSlice";
+import { setNickname, setPassword, signOut } from "../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 const Settings = () => {
@@ -12,9 +12,11 @@ const Settings = () => {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-     dispatch(signOut(false));
-     navigate('/');
-  }
+    dispatch(signOut(false));
+    dispatch(setNickname(""));
+    dispatch(setPassword(""));
+    navigate("/");
+  };
 
   return (
     <div className="flex flex-col w-full gap-8">
