@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import SignInOpenBtn from "../components/SignInOpenBtn";
 
 function Home() {
-  const nav = useSelector(state => state.nav);
   const { isAuth } = useSelector(state => state.auth);
 
   return (
