@@ -16,7 +16,7 @@ function Home() {
       <div className="min-h-screen relative flex gap-8 items-center justify-center flex-col">
         <H1 classNames={"text-center mx-auto"}>
           Так-ли ты хорош в программировании? <br />
-          Пройди тест и узнай!
+          Пройди наши задачи и узнай!
         </H1>
         {isAuth ? (
           <div className="flex gap-4">
